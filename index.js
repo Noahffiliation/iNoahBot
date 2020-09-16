@@ -3,6 +3,7 @@ const fs = require('fs');
 const winston = require('winston');
 const { prefix, token } = require('./config.json');
 
+// Set main client and helper collections
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
@@ -14,7 +15,7 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-// Logging
+// Create logger
 const logger = winston.createLogger({
 	transports: [
 		new winston.transports.Console(),
