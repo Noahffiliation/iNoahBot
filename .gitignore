@@ -1,0 +1,5 @@
+config.json
+node_modules/
+logs/
+commands/template.txt
+terminal.txt
