@@ -12,5 +12,8 @@
     "discord.js": "^12.3.1",
     "eslint": "^7.7.0",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-security": "^1.4.0"
   }
 }
