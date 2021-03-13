@@ -45,7 +45,7 @@ client.on('guildMemberAdd', member => {
 
 // On removing a user
 client.on('guildMemberRemove', member => {
-	logger.log('info', `${member} has joined the server`);
+	logger.log('info', `${member} has left the server`);
 });
 
 // On getting a message
