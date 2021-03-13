@@ -35,11 +35,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 I mainly followed the [Discord.js Guide](https://discordjs.guide/) in order to get everything set up, I recommend others do the same if they would like to work on the bot. It goes through installing Node.js, Discord.js, ESlint, and setting up everything in the [Discord Development Portal](https://discord.com/developers/applications/).
 
-I also use [ZenHub](https://www.zenhub.com/) for issue tracking and project management.
-
-## To Do
-Please check the [Workspace](https://github.com/Noahffiliation/iNoahBot/settings#zenhub) to see the current tasks being worked on. Please contact me through [email](nlindsey15@gmail.com) or [Twitter](https://twitter.com/Noahffiliation) if you have ideas or would like to contribute.
-
 ## Built Using <a name = "built_using"></a>
 - [Visual Studio Code](https://code.visualstudio.com/) - IDE
 - [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) - Bash
@@ -47,7 +42,6 @@ Please check the [Workspace](https://github.com/Noahffiliation/iNoahBot/settings
 - [Node.js](https://nodejs.org/en/) - Server Environment
 - [ESlint](https://eslint.org/) - Linter
 - [winston](https://github.com/winstonjs/winston) - Logging
-- [ZenHub](https://www.zenhub.com/) - Project Management
 
 ## Authors <a name = "authors"></a>
 - [@Noahffiliation](https://github.com/Noahffiliation) - Idea & Initial work
