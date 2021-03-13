@@ -42,7 +42,7 @@ Please check the [Workspace](https://github.com/Noahffiliation/iNoahBot/settings
 
 ## Built Using <a name = "built_using"></a>
 - [Visual Studio Code](https://code.visualstudio.com/) - IDE
-- [Windows Subsysten for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) - Bash
+- [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) - Bash
 - [Discord.js](https://discord.js.org/#/) - API interaction
 - [Node.js](https://nodejs.org/en/) - Server Environment
 - [ESlint](https://eslint.org/) - Linter
