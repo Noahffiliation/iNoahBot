@@ -1,10 +1,12 @@
 module.exports = {
 	name: 'server',
 	description: 'Display info about this server.',
+	aliases: ['serverinfo', 'guildinfo', 'guild'],
+	usage: '[command name]',
+	cooldown: 5,
 	guildOnly: true,
+	args: false,
 	execute(message) {
-		// Returns total number of members with bots not included
-		const memberCount = message.guild.members.cache.filter(member => !member.user.bot).size;
-		message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${memberCount}`);
+		message.channel.send(`Server name: ${message.guild.name}\nDescription: ${message.guild.description}\nOwner: ${message.guild.owner}\nRegion: ${message.guild.region}\nFeatures: ${message.guild.features}\nTotal members: ${message.guild.memberCount}\nTotal roles: ${message.guild.roles.cache.size}\nTotal emojis: ${message.guild.emojis.cache.size}\n`);
 	},
 };
