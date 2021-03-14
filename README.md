@@ -42,6 +42,7 @@ I mainly followed the [Discord.js Guide](https://discordjs.guide/) in order to g
 - [Node.js](https://nodejs.org/en/) - Server Environment
 - [ESlint](https://eslint.org/) - Linter
 - [winston](https://github.com/winstonjs/winston) - Logging
+- [Notion](https://www.notion.so/) - Project Management
 
 ## Authors <a name = "authors"></a>
 - [@Noahffiliation](https://github.com/Noahffiliation) - Idea & Initial work
