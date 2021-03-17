@@ -96,7 +96,7 @@ client.on('message', message => {
 		// Calculate cooldown time left
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
 		}
 	}
 
@@ -111,7 +111,7 @@ client.on('message', message => {
 	catch (error) {
 		console.error(error);
 		logger.log('error', error);
-		message.reply('there was an error trying to execute that command!');
+		message.reply('There was an error trying to execute that command!');
 	}
 });
 

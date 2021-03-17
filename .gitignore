@@ -1,5 +1,6 @@
 config.json
 node_modules/
 logs/
+archive/
 commands/template.txt
 terminal.txt
