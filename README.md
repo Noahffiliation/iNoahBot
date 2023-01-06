@@ -8,7 +8,6 @@
 - [About](#about)
 - [Built Using](#built_using)
 - [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
 
 ## About <a name = "about"></a>
 Working on a Discord bot to mess around with
