@@ -1,7 +1,7 @@
 <h1 align="center">iNoahBot</h1>
 
 <p align="center"> Messing around with Discord.js to make a bot
-    <br> 
+    <br>
 </p>
 
 ## Table of Contents
