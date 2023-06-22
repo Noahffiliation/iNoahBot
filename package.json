@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run lint && node deploy-commands.js && node index.js",
-	"dev": "npm run lint && node deploy-commands.js && nodemon index.js",
+    "dev": "npm run lint && node deploy-commands.js && nodemon index.js",
     "pm": "npm run lint && node deploy-commands.js && pm2 start index.js --watch",
     "stop": "pm2 stop index.js",
     "lint": "eslint . --fix"
@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/Noahffiliation/iNoahBot#readme",
   "dependencies": {
-    "discord.js": "^14.7.1"
-},
-"devDependencies": {
-	"dotenv": "^16.0.3",
-	"eslint": "^8.31.0",
-	"nodemon": "^2.0.20"
+    "discord.js": "^14.11.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "eslint": "^8.31.0",
+    "nodemon": "^2.0.20"
   }
 }
