@@ -3,5 +3,9 @@
         "inoahbot",
         "paren",
         "parens"
-    ]
+    ],
+    "sonarlint.connectedMode.project": {
+        "connectionId": "noahffiliation",
+        "projectKey": "Noahffiliation_iNoahBot"
+    }
 }
