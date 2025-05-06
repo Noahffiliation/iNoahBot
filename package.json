@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/Noahffiliation/iNoahBot#readme",
   "dependencies": {
-    "discord.js": "^14.19.2"
+    "discord.js": "^14.19.3"
   }
 }
