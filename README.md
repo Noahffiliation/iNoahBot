@@ -1,6 +1,6 @@
 <h1 align="center">iNoahBot</h1>
 
-<p align="center"> Messing around with Discord.js to make a bot
+<p align="center"> Messing around with discord.py to make a bot
     <br>
 </p>
 
@@ -16,8 +16,7 @@ Potential features:
 - ???
 
 ## Built Using <a name = "built_using"></a>
-- Node
-- Discord.js
+- discord.py
 
 ## Authors <a name = "authors"></a>
 - [@Noahffiliation](https://github.com/Noahffiliation) - Idea & Initial work
