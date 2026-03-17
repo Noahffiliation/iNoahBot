@@ -5,7 +5,7 @@ attrs==25.4.0
 audioop-lts==0.2.2
 beautifulsoup4==4.14.3
 colorama==0.4.6
-coverage==7.13.4
+coverage==7.13.5
 discord.py==2.7.1
 frozenlist==1.8.0
 idna==3.11
