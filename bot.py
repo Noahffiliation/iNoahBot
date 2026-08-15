@@ -1,50 +1,42 @@
-import discord
-from discord.ext import commands
-from discord import app_commands
+import logging
 import os
+import discord
+from discord import app_commands
+from discord.ext import commands
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
+# Logger setup
+logger = logging.getLogger("iNoahBot")
+
+
 # Bot configuration
+class NoahBot(commands.Bot):
+    async def setup_hook(self):
+        # Sync slash commands once during startup
+        try:
+            synced = await self.tree.sync()
+            logger.info("Synced %d command(s)", len(synced))
+        except Exception:
+            logger.exception("Failed to sync commands!")
+
+
 intents = discord.Intents.default()
-intents.message_content = True  # Still useful for some features
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = NoahBot(command_prefix='!', intents=intents)
 
 NO_PERMISSION_COMMAND_MESSAGE = "You don't have permission to use this command!"
 
+
 @bot.event
 async def on_ready():
-    print(f'{bot.user} has connected to Discord!')
-    print(f'Bot is in {len(bot.guilds)} servers')
+    logger.info("%s has connected to Discord!", bot.user)
+    logger.info("Bot is in %d servers", len(bot.guilds))
 
-    # Sync slash commands
-    try:
-        synced = await bot.tree.sync()
-        print(f'Synced {len(synced)} command(s)')
-    except Exception as e:
-        print(f'Failed to sync commands: {e}')
 
-# Slash Commands
-@bot.tree.command(name='info', description='Display bot information')
-async def info(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="Bot Information",
-        description="A simple Discord bot with slash commands",
-        color=0x00ff00
-    )
-    embed.add_field(name="Servers", value=len(bot.guilds), inline=True)
-    embed.add_field(name="Users", value=len(bot.users), inline=True)
-    embed.add_field(name="Latency", value=f"{round(bot.latency * 1000)}ms", inline=True)
-    await interaction.response.send_message(embed=embed)
-
-@bot.tree.command(name='userinfo', description='Get information about a user')
-@app_commands.describe(member='The member to get info about (defaults to you)')
-async def userinfo(interaction: discord.Interaction, member: discord.Member = None):
-    if member is None:
-        member = interaction.user
-
+def create_user_info_embed(member: discord.Member) -> discord.Embed:
+    """Build a standardized user info embed for slash commands and context menus."""
     embed = discord.Embed(
         title=f"User Info - {member}",
         color=member.color
@@ -61,9 +53,36 @@ async def userinfo(interaction: discord.Interaction, member: discord.Member = No
         roles_text = ', '.join(roles) if len(roles) <= 10 else ', '.join(roles[:10]) + f' (+{len(roles) - 10} more)'
         embed.add_field(name="Role list", value=roles_text, inline=False)
 
+    return embed
+
+
+# Slash Commands
+@bot.tree.command(name='info', description='Display bot information')
+async def info(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="Bot Information",
+        description="A simple Discord bot with slash commands",
+        color=0x00ff00
+    )
+    embed.add_field(name="Servers", value=len(bot.guilds), inline=True)
+    embed.add_field(name="Users", value=len(bot.users), inline=True)
+    embed.add_field(name="Latency", value=f"{round(bot.latency * 1000)}ms", inline=True)
     await interaction.response.send_message(embed=embed)
 
+
+@bot.tree.command(name='userinfo', description='Get information about a user')
+@app_commands.guild_only()
+@app_commands.describe(member='The member to get info about (defaults to you)')
+async def userinfo(interaction: discord.Interaction, member: discord.Member | None = None):
+    if member is None:
+        member = interaction.user
+
+    embed = create_user_info_embed(member)
+    await interaction.response.send_message(embed=embed)
+
+
 @bot.tree.command(name='serverinfo', description='Get information about the server')
+@app_commands.guild_only()
 async def serverinfo(interaction: discord.Interaction):
     guild = interaction.guild
 
@@ -86,40 +105,43 @@ async def serverinfo(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
+
 # Context menu commands (right-click commands)
 @bot.tree.context_menu(name='User Info')
+@app_commands.guild_only()
 async def context_userinfo(interaction: discord.Interaction, member: discord.Member):
     """Right-click context menu command for user info"""
-    embed = discord.Embed(
-        title=f"User Info - {member}",
-        color=member.color
-    )
-    embed.set_thumbnail(url=member.avatar.url if member.avatar else member.default_avatar.url)
-    embed.add_field(name="ID", value=member.id, inline=True)
-    embed.add_field(name="Created", value=discord.utils.format_dt(member.created_at, style='D'), inline=True)
-    embed.add_field(name="Joined", value=discord.utils.format_dt(member.joined_at, style='D'), inline=True)
-    embed.add_field(name="Roles", value=len(member.roles) - 1, inline=True)
-
+    embed = create_user_info_embed(member)
     await interaction.response.send_message(embed=embed, ephemeral=True)
+
 
 # Error handling for slash commands
 @bot.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.MissingPermissions):
-        await interaction.response.send_message(NO_PERMISSION_COMMAND_MESSAGE, ephemeral=True)
+        msg = NO_PERMISSION_COMMAND_MESSAGE
     elif isinstance(error, app_commands.CommandOnCooldown):
-        await interaction.response.send_message(f"Command is on cooldown. Try again in {error.retry_after:.2f} seconds.", ephemeral=True)
+        msg = f"Command is on cooldown. Try again in {error.retry_after:.2f} seconds."
     else:
-        print(f'Slash command error: {error}')
-        if not interaction.response.is_done():
-            await interaction.response.send_message("An error occurred while processing the command.", ephemeral=True)
+        logger.error("Slash command error: %s", error, exc_info=error)
+        msg = "An error occurred while processing the command."
 
-# Run the bot
-if __name__ == "__main__":
+    if not interaction.response.is_done():
+        await interaction.response.send_message(msg, ephemeral=True)
+    else:
+        await interaction.followup.send(msg, ephemeral=True)
+
+
+def main():
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
     token = os.getenv('DISCORD_TOKEN')
     if not token:
-        print("Error: DISCORD_TOKEN not found in environment variables!")
-        print("Please create a .env file with your bot token:")
-        print("DISCORD_TOKEN=your_bot_token_here")
-    else:
-        bot.run(token)
+        logger.error("DISCORD_TOKEN not found in environment variables!")
+        logger.error("Please create a .env file with your bot token: DISCORD_TOKEN=your_bot_token_here")
+        return
+    bot.run(token)
+
+
+# Run the bot
+if __name__ == "__main__":  # pragma: no cover
+    main()

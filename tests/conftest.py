@@ -1,7 +1,7 @@
 import pytest
 import discord
 from discord.ext import commands
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 @pytest.fixture
 def mock_bot():
@@ -18,6 +18,7 @@ def mock_interaction():
     interaction = AsyncMock(spec=discord.Interaction)
     interaction.response = AsyncMock()
     interaction.response.is_done = MagicMock(return_value=False)
+    interaction.followup = AsyncMock()
     interaction.user = MagicMock(spec=discord.Member)
     interaction.user.name = "TestUser"
     interaction.user.discriminator = "1234"
