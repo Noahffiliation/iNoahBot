@@ -1,0 +1,7 @@
+services:
+  inoahbot:
+    build: .
+    container_name: inoahbot
+    restart: unless-stopped
+    env_file:
+      - .env
