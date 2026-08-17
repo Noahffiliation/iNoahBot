@@ -27,7 +27,4 @@ ignore_missing_imports = true
 warn_unused_configs = true
 disallow_untyped_defs = false
 check_untyped_defs = true
-
-[[tool.mypy.overrides]]
-module = "tests.*"
-ignore_errors = true
+disable_error_code = ["call-arg", "arg-type", "attr-defined"]

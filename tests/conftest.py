@@ -1,7 +1,9 @@
-import pytest
-import discord
-from discord.ext import commands
 from unittest.mock import AsyncMock, MagicMock
+
+import discord
+import pytest
+from discord.ext import commands
+
 
 @pytest.fixture
 def mock_bot():
@@ -12,6 +14,7 @@ def mock_bot():
     bot.tree = AsyncMock()
     bot.latency = 0.05
     return bot
+
 
 @pytest.fixture
 def mock_interaction():
